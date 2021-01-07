@@ -15,6 +15,11 @@ alumno = new Alumnos();
 
 io.on('connection', (client) => {
 
+    client.on('disconnect', () => {
+
+    });
+
+
     /*
     INICIOS DE SESION
     */

@@ -37,6 +37,10 @@ socket.on('connect', function() {
     })
 });
 
+socket.on('disconnect', function() {
+    window.location = '../index.html'
+});
+
 function Salida() {
     var socket = io();
     socket.emit('alumnoEstado3', alu_id, function(res) {

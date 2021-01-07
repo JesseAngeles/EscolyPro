@@ -39,6 +39,10 @@ socket.on('connect', function() {
     })
 });
 
+socket.on('disconnect', function() {
+    window.location = '../index.html'
+});
+
 socket.on('datos', function(res) {
     console.log(res);
 })

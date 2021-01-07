@@ -11,6 +11,10 @@ function Regresar() {
     window.location = `../tutor.html?id=${id}`;
 }
 
+socket.on('disconnect', function() {
+    window.location = '../index.html'
+});
+
 function Contrasena() {
     window.location = `tut_contrasena.html?id=${id}`;
 }

@@ -23,6 +23,9 @@ function Salir() {
     window.location = '../../index.html';
 }
 
+socket.on('disconnect', function() {
+    window.location = '../index.html'
+});
 
 function CambiarContrasena() {
     var socket = io();

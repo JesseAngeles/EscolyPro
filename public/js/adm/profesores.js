@@ -38,6 +38,10 @@ socket.on('connect', function() {
 
 });
 
+socket.on('disconnect', function() {
+    window.location = '../index.html'
+});
+
 function RegistrarProfesor() {
     let socket = io();
 

@@ -17,6 +17,10 @@ socket.on('connect', function() {
 
 });
 
+socket.on('disconnect', function() {
+    window.location = '../index.html'
+});
+
 function Regresar() {
     window.location = `adm_alumnos.html?id=${id}`;
 }

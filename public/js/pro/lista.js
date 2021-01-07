@@ -34,6 +34,10 @@ socket.on('connect', function() {
     })
 });
 
+socket.on('disconnect', function() {
+    window.location = '../index.html'
+});
+
 function crearRegistro(alu_id, alu_nombre, alu_apellidoP, alu_apellidoM) {
     const registro = document.querySelector('#tabla_alumnos');
     let tr = document.createElement('tr');

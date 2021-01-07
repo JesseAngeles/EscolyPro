@@ -10,6 +10,10 @@ if (!params.has('id')) {
 var id = params.get('id');
 let usuario;
 
+socket.on('disconnect', function() {
+    window.location = '../index.html'
+});
+
 function Profesores() {
     window.location = `adm_vistas/adm_profesores.html?id=${id}`;
 }
