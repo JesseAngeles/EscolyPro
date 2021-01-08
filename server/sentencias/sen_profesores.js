@@ -45,8 +45,6 @@ class Profesores {
         let conexion = new Conexion();
         conexion = conexion.crearConexion();
 
-        console.log("id " + id);
-
         let query = conexion.query('SELECT * FROM Profesores WHERE pro_id = ?', [id], function(err, res) {
             if (err) {
                 return callback(false)
@@ -72,8 +70,6 @@ class Profesores {
     obtenerPorGrupo(grupo, callback) {
         let conexion = new Conexion();
         conexion = conexion.crearConexion();
-
-        console.log(grupo);
 
         let query = conexion.query('SELECT pro_id FROM Profesores WHERE pro_grupo = ?', [grupo], function(err, res) {
             if (err) {

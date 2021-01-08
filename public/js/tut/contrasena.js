@@ -30,19 +30,33 @@ function CambiarContrasena() {
     var contrasena_nueva = document.getElementById('tut_contrasenaN').value;
     var contrasena_nueva_repeticion = document.getElementById('tut_comparacion').value;
 
-    socket.on('connect', function() {
+    let bandera = false;
 
-        socket.emit('tut_Obtener', id, function(res) {
-            var usuario = res;
-            if (usuario[0].tut_contrasena === contrasena_vieja && contrasena_nueva === contrasena_nueva_repeticion) {
-                var tutor = {
-                    id,
-                    contrasena_nueva
+    let val_contrasena = /[a-zA-z0-9]{8,}/;
+    if (val_contrasena.test(contrasena_nueva)) {
+        if (val_contrasena.test(contrasena_nueva_repeticion)) {
+            bandera = true;
+        }
+    }
+
+    if (bandera) {
+
+        socket.on('connect', function() {
+
+            socket.emit('tut_Obtener', id, function(res) {
+                var usuario = res;
+                if (usuario[0].tut_contrasena === contrasena_vieja && contrasena_nueva === contrasena_nueva_repeticion) {
+                    var tutor = {
+                        id,
+                        contrasena_nueva
+                    }
+                    socket.emit('tut_cambiarContrasena', tutor, function(res) {
+                        Contrasena();
+                    });
                 }
-                socket.emit('tut_cambiarContrasena', tutor, function(res) {
-                    Contrasena();
-                });
-            }
+            });
         });
-    });
+    } else {
+        alert('Las contraseñas no coinciden')
+    }
 }

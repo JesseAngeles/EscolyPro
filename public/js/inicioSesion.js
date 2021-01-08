@@ -11,6 +11,7 @@ function Administrador() {
         console.log('Conectado al servidor');
         socket.emit('adm_validarUsuario', obtenerDatos(), function(id) {
             if (!id) {
+                alert('Favor de ingresar correctamente los datos')
                 window.location = 'InicioSesion.html';
             } else {
                 window.location = `Administrador.html?id=${id}`;
@@ -27,6 +28,7 @@ function Profesor() {
         socket.emit('pro_validarUsuario', obtenerDatos(), function(id) {
             console.log(id);
             if (!id) {
+                alert('Favor de ingresar correctamente los datos')
                 window.location = 'InicioSesion.html';
             } else {
                 window.location = `Profesor.html?id=${id}`;
@@ -43,7 +45,8 @@ function Tutor() {
         socket.emit('tut_validarUsuario', obtenerDatos(), function(id) {
             console.log(id);
             if (!id) {
-                //window.location = 'InicioSesion.html';
+                alert('Favor de ingresar correctamente los datos')
+                window.location = 'InicioSesion.html';
             } else {
                 window.location = `Tutor.html?id=${id}`;
             }

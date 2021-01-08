@@ -78,54 +78,104 @@ function Actualizar() {
     let tut2 = tut.tut2;
     let tut3 = tut.tut3;
 
-    let ban1 = true;
-    let ban2 = true;
-    let ban3 = true;
+    let bandera1 = false;
+    let bandera2 = false;
+    let bandera3 = false;
 
-    socket.emit('adm_obtenerTutores', alu_id, function(res) {
-
-        if (res[0].tut_nombre == tut1.tut_nombre && res[0].tut_apellidoP == tut1.tut_apellidoP && res[0].tut_apellidoM == tut1.tut_apellidoM && res[0].tut_correo == tut1.tut_correo) {
-            tut1.tut_contrasena = res[0].tut_contrasena;
+    let val_nombre = /^[A-ZÁ-Ú]{1}[a-zá-ú]{2,19}/;
+    let val_correo = /^[a-zA-Z0-9.!#Ññ$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    if (val_nombre.test(tut1.tut_nombre)) {
+        if (val_nombre.test(tut1.tut_apellidoP)) {
+            if (val_nombre.test(tut1.tut_apellidoM)) {
+                if (val_correo.test(tut1.tut_correo)) {
+                    bandera1 = true;
+                }
+            }
         }
+    }
+    if (tut1.tut_nombre.length == 0 && tut1.tut_apellidoP.length == 0 && tut1.tut_apellidoP.length == 0 && tut1.tut_correo.length == 0) {
+        bandera1 = true;
+    }
 
-        if (res[1].tut_nombre == tut2.tut_nombre && res[1].tut_apellidoP == tut2.tut_apellidoP && res[1].tut_apellidoM == tut2.tut_apellidoM && res[1].tut_correo == tut2.tut_correo) {
-            tut2.tut_contrasena = res[1].tut_contrasena;
+    if (val_nombre.test(tut2.tut_nombre)) {
+        if (val_nombre.test(tut2.tut_apellidoP)) {
+            if (val_nombre.test(tut2.tut_apellidoM)) {
+                if (val_correo.test(tut2.tut_correo)) {
+                    bandera2 = true;
+                }
+            }
         }
+    }
+    if (tut2.tut_nombre.length == 0 && tut2.tut_apellidoP.length == 0 && tut2.tut_apellidoP.length == 0 && tut2.tut_correo.length == 0) {
+        bandera2 = true;
+    }
 
-        if (res[2].tut_nombre == tut3.tut_nombre && res[2].tut_apellidoP == tut3.tut_apellidoP && res[2].tut_apellidoM == tut3.tut_apellidoM && res[2].tut_correo == tut3.tut_correo) {
-            tut3.tut_contrasena = res[2].tut_contrasena;
+    if (val_nombre.test(tut3.tut_nombre)) {
+        if (val_nombre.test(tut3.tut_apellidoP)) {
+            if (val_nombre.test(tut3.tut_apellidoM)) {
+                if (val_correo.test(tut3.tut_correo)) {
+                    bandera3 = true;
+                }
+            }
         }
+    }
+    if (tut3.tut_nombre.length == 0 && tut3.tut_apellidoP.length == 0 && tut3.tut_apellidoP.length == 0 && tut3.tut_correo.length == 0) {
+        bandera3 = true;
+    }
 
-        socket.emit('adm_actualizarTutores', tut1, function(res0) {
-            socket.emit('adm_actualizarTutores', tut2, function(res1) {
-                socket.emit('adm_actualizarTutores', tut3, function(res2) {
+    if (bandera1 && bandera2 && bandera3) {
 
-                    if (!res0) {
-                        emailjs.send("default_service", "template_qgng8d4", {
-                            to_name: `${tut1.tut_nombre} ${tut1.tut_apellidoP} ${tut1.tut_apellidoM}`,
-                            message: tut1.tut_contrasena,
-                            to_email: tut1.tut_correo,
-                        });
-                    }
-                    if (!res1) {
-                        emailjs.send("default_service", "template_qgng8d4", {
-                            to_name: `${tut2.tut_nombre} ${tut2.tut_apellidoP} ${tut2.tut_apellidoM}`,
-                            message: tut2.tut_contrasena,
-                            to_email: tut2.tut_correo,
-                        });
-                    }
-                    if (!res2) {
-                        emailjs.send("default_service", "template_qgng8d4", {
-                            to_name: `${tut3.tut_nombre} ${tut3.tut_apellidoP} ${tut3.tut_apellidoM}`,
-                            message: tut3.tut_contrasena,
-                            to_email: tut3.tut_correo,
-                        });
-                    }
+        let ban1 = true;
+        let ban2 = true;
+        let ban3 = true;
 
+        socket.emit('adm_obtenerTutores', alu_id, function(res) {
+
+            if (res[0].tut_nombre == tut1.tut_nombre && res[0].tut_apellidoP == tut1.tut_apellidoP && res[0].tut_apellidoM == tut1.tut_apellidoM && res[0].tut_correo == tut1.tut_correo) {
+                tut1.tut_contrasena = res[0].tut_contrasena;
+            }
+
+            if (res[1].tut_nombre == tut2.tut_nombre && res[1].tut_apellidoP == tut2.tut_apellidoP && res[1].tut_apellidoM == tut2.tut_apellidoM && res[1].tut_correo == tut2.tut_correo) {
+                tut2.tut_contrasena = res[1].tut_contrasena;
+            }
+
+            if (res[2].tut_nombre == tut3.tut_nombre && res[2].tut_apellidoP == tut3.tut_apellidoP && res[2].tut_apellidoM == tut3.tut_apellidoM && res[2].tut_correo == tut3.tut_correo) {
+                tut3.tut_contrasena = res[2].tut_contrasena;
+            }
+
+            socket.emit('adm_actualizarTutores', tut1, function(res0) {
+                socket.emit('adm_actualizarTutores', tut2, function(res1) {
+                    socket.emit('adm_actualizarTutores', tut3, function(res2) {
+
+                        if (!res0) {
+                            emailjs.send("default_service", "template_qgng8d4", {
+                                to_name: `${tut1.tut_nombre} ${tut1.tut_apellidoP} ${tut1.tut_apellidoM}`,
+                                message: tut1.tut_contrasena,
+                                to_email: tut1.tut_correo,
+                            });
+                        }
+                        if (!res1) {
+                            emailjs.send("default_service", "template_qgng8d4", {
+                                to_name: `${tut2.tut_nombre} ${tut2.tut_apellidoP} ${tut2.tut_apellidoM}`,
+                                message: tut2.tut_contrasena,
+                                to_email: tut2.tut_correo,
+                            });
+                        }
+                        if (!res2) {
+                            emailjs.send("default_service", "template_qgng8d4", {
+                                to_name: `${tut3.tut_nombre} ${tut3.tut_apellidoP} ${tut3.tut_apellidoM}`,
+                                message: tut3.tut_contrasena,
+                                to_email: tut3.tut_correo,
+                            });
+                        }
+
+                    })
                 })
             })
-        })
-    });
+        });
+    } else {
+        alert('Ingrese correctamente todos los datos');
+    }
 
 }
 

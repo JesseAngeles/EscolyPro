@@ -1,3 +1,5 @@
+var socket = io();
+
 var params = new URLSearchParams(window.location.search);
 
 if (!params.has('id')) {
@@ -34,17 +36,29 @@ function CambiarContrasena() {
     var contrasena_nueva = document.getElementById('adm_contrasenaN').value;
     var contrasena_nueva_repeticion = document.getElementById('adm_comparacion').value;
 
-    socket.on('connect', function() {
+    let bandera = false;
 
-        socket.emit('adm_Obtener', id, function(res) {
-            var usuario = res;
-            if (usuario[0].adm_contrasena === contrasena_vieja && contrasena_nueva === contrasena_nueva_repeticion) {
-                var administrador = {
-                    id,
-                    contrasena_nueva
+    let val_contrasena = /[a-zA-z0-9]{8,}/;
+    if (val_contrasena.test(contrasena_nueva)) {
+        if (val_contrasena.test(contrasena_nueva_repeticion)) {
+            bandera = true;
+        }
+    }
+
+    if (bandera) {
+        socket.on('connect', function() {
+            socket.emit('adm_Obtener', id, function(res) {
+                var usuario = res;
+                if (usuario[0].adm_contrasena === contrasena_vieja && contrasena_nueva === contrasena_nueva_repeticion) {
+                    var administrador = {
+                        id,
+                        contrasena_nueva
+                    }
+                    socket.emit('adm_cambiarContrasena', administrador);
                 }
-                socket.emit('adm_cambiarContrasena', administrador);
-            }
+            });
         });
-    });
+    } else {
+        alert('Las contraseñas no coinciden')
+    }
 }

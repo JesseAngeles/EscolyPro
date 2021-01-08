@@ -32,7 +32,7 @@ socket.on('connect', function() {
                 crearRegistro(profesor[i].pro_id, profesor[i].pro_nombre, profesor[i].pro_apellidoP, profesor[i].pro_apellidoM, profesor[i].pro_grupo);
             }
         } else {
-            console.log('no hay profes');
+            alert('Bienvenido, ingrese los datos del profesor ára agregarlo')
         }
     });
 
@@ -54,21 +54,41 @@ function RegistrarProfesor() {
         pro_contrasena: GeneradorContrasenas()
     }
 
-    socket.on('connect', function() {
-        socket.emit('adm_registrarProfesor', profesor, function(res) {
-            if (res) {
-                emailjs.send("default_service", "template_qgng8d4", {
-                    to_name: `${profesor.pro_nombre} ${profesor.pro_apellidoP} ${profesor.pro_apellidoM}`,
-                    message: profesor.pro_contrasena,
-                    to_email: profesor.pro_correo,
-                });
-                crearRegistro(profesor.pro_cedula, profesor.pro_nombre, profesor.pro_apellidoP, profesor.pro_apellidoM, );
-            } else {
-                alert('El profesor ya se ah registrado.');
-            }
-        });
+    let bandera = false;
 
-    });
+    let val_cedula = /[A-Z0-9]{7,8}/;
+    let val_nombre = /^[A-ZÁ-Ú]{1}[a-zá-ú]{2,19}/;
+    let val_correo = /^[a-zA-Z0-9.!#Ññ$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    if (val_cedula.test(profesor.pro_cedula)) {
+        if (val_nombre.test(profesor.pro_nombre)) {
+            if (val_nombre.test(profesor.pro_apellidoP)) {
+                if (val_nombre.test(profesor.pro_apellidoM)) {
+                    if (val_correo.test(profesor.pro_correo)) {
+                        bandera = true;
+                    }
+                }
+            }
+        }
+    }
+    if (bandera) {
+        socket.on('connect', function() {
+            socket.emit('adm_registrarProfesor', profesor, function(res) {
+                if (res) {
+                    emailjs.send("default_service", "template_qgng8d4", {
+                        to_name: `${profesor.pro_nombre} ${profesor.pro_apellidoP} ${profesor.pro_apellidoM}`,
+                        message: profesor.pro_contrasena,
+                        to_email: profesor.pro_correo,
+                    });
+                    crearRegistro(profesor.pro_cedula, profesor.pro_nombre, profesor.pro_apellidoP, profesor.pro_apellidoM, );
+                } else {
+                    alert('El profesor ya se ah registrado.');
+                }
+            });
+
+        })
+    } else {
+        alert('Ingrese los datos correctamente');
+    }
 }
 
 function ActualizarProfesor() {
@@ -84,18 +104,39 @@ function ActualizarProfesor() {
         pro_contrasena: GeneradorContrasenas()
     }
 
-    socket.on('connect', function() {
-        socket.emit('adm_actualizarProfesor', profesor, function(res) {
-            if (res) {
-                /*emailjs.send("default_service", "template_qgng8d4", {
-                    to_name: `${profesor.pro_nombre} ${profesor.pro_apellidoP} ${profesor.pro_apellidoM}`,
-                    message: profesor.pro_contrasena,
-                    to_email: profesor.pro_correo,
-                });*/
-            }
-        });
+    let bandera = false;
 
-    });
+    let val_cedula = /[A-Z0-9]{7,8}/;
+    let val_nombre = /^[A-ZÁ-Ú]{1}[a-zá-ú]{2,19}/;
+    let val_correo = /^[a-zA-Z0-9.!#Ññ$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    if (val_cedula.test(profesor.pro_cedula)) {
+        if (val_nombre.test(profesor.pro_nombre)) {
+            if (val_nombre.test(profesor.pro_apellidoP)) {
+                if (val_nombre.test(profesor.pro_apellidoM)) {
+                    if (val_correo.test(profesor.pro_correo)) {
+                        bandera = true;
+                    }
+                }
+            }
+        }
+    }
+
+    if (bandera) {
+        socket.on('connect', function() {
+            socket.emit('adm_actualizarProfesor', profesor, function(res) {
+                if (res) {
+                    emailjs.send("default_service", "template_qgng8d4", {
+                        to_name: `${profesor.pro_nombre} ${profesor.pro_apellidoP} ${profesor.pro_apellidoM}`,
+                        message: profesor.pro_contrasena,
+                        to_email: profesor.pro_correo,
+                    });
+                }
+            });
+
+        });
+    } else {
+        alert('Ingrese los datos correctamente');
+    }
 
     socket.emit('adm_obtenerProfesores', function(profesor) {
         borrarTabla();

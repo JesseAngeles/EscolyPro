@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS Alumnos (
     alu_apellidoP VARCHAR(255) NOT NULL,
     alu_apellidoM VARCHAR(255) NOT NULL,
     alu_estado ENUM('1','2','3','4','5'),
-    FOREIGN KEY (pro_id) REFERENCES Profesores(pro_id)
+    FOREIGN KEY (pro_id) REFERENCES Profesores(pro_id) ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Tutores (

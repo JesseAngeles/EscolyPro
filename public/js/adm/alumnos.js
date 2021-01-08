@@ -68,11 +68,29 @@ function RegistrarAlumno() {
             pro_id: res
         }
 
-        socket.emit('adm_registrarAlumno', alumno, function(res) {
-            if (res) {
-                crearRegistro(res, alumno.alu_generacion, alumno.alu_nombre, alumno.alu_apellidoP, alumno.alu_apellidoM, alumno.pro_id);
+        let bandera = false;
+
+        let val_generacion = /[0-9]{4}/;
+        let val_nombre = /^[A-ZÁ-Ú]{1}[a-zá-ú]{2,19}/;
+        if (val_generacion.test(alumno.alu_generacion)) {
+            if (val_nombre.test(alumno.alu_nombre)) {
+                if (val_nombre.test(alumno.alu_apellidoP)) {
+                    if (val_nombre.test(alumno.alu_apellidoM)) {
+                        bandera = true;
+                    }
+                }
             }
-        });
+        }
+
+        if (bandera) {
+            socket.emit('adm_registrarAlumno', alumno, function(res) {
+                if (res) {
+                    crearRegistro(res, alumno.alu_generacion, alumno.alu_nombre, alumno.alu_apellidoP, alumno.alu_apellidoM, alumno.pro_id);
+                }
+            });
+        } else {
+            alert('Ingrese los datos correctamente');
+        }
     });
 }
 
@@ -91,9 +109,27 @@ function ActualizarAlumno() {
             alu_nombre: document.getElementById('mod_alu_nombre').value
         }
 
-        socket.emit('adm_actualizarAlumno', alumno, function(res) {
-            Alumnos();
-        });
+        let bandera = false;
+
+        let val_generacion = /[0-9]{4}/;
+        let val_nombre = /^[A-ZÁ-Ú]{1}[a-zá-ú]{2,19}/;
+        if (val_generacion.test(alumno.alu_generacion)) {
+            if (val_nombre.test(alumno.alu_nombre)) {
+                if (val_nombre.test(alumno.alu_apellidoP)) {
+                    if (val_nombre.test(alumno.alu_apellidoM)) {
+                        bandera = true;
+                    }
+                }
+            }
+        }
+
+        if (bandera) {
+            socket.emit('adm_actualizarAlumno', alumno, function(res) {
+                Alumnos();
+            });
+        } else {
+            alert('Ingrese los datos correctamente');
+        }
     });
 
 }

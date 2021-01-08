@@ -84,7 +84,6 @@ class Alumnos {
                     res[0].alu_nombre = CryptoJS.AES.decrypt(res[0].alu_nombre, clave).toString(CryptoJS.enc.Utf8);
                     res[0].alu_apellidoP = CryptoJS.AES.decrypt(res[0].alu_apellidoP, clave).toString(CryptoJS.enc.Utf8);
                     res[0].alu_apellidoM = CryptoJS.AES.decrypt(res[0].alu_apellidoM, clave).toString(CryptoJS.enc.Utf8);
-
                     return callback(null, res);
                 } else {
                     return callback(false);

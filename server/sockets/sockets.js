@@ -354,7 +354,6 @@ io.on('connection', (client) => {
             if (err) {
                 return callback(false);
             }
-            console.log(res);
             return callback(res);
         })
 
@@ -600,10 +599,6 @@ io.on('connection', (client) => {
             return callback(res[0].alu_estado);
         })
     })
-
-    /*client.emit('datos', ObtenerEstado(20181), res => {
-        console.log(res);
-    });*/
 
     function Estados() {
         alumno.obtenerEstado(20181, (err, res) => {
